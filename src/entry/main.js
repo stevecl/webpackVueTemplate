@@ -8,8 +8,8 @@ import App from '../view/page/main/app';
 // const App = (resolve)=> {require(['../view/app.vue'], resolve)};
 
 import bubble_hint from '../view/components/bubble_hint';
-Vue.component('bubbleHint',bubble_hint);
-Vue.component('loading',()=>System.import('../view/components/loading'));
+Vue.component('bubbleHint', bubble_hint);
+Vue.component('loading', () => System.import('../view/components/loading'));
 
 import Vue from 'vue';
 import axios from 'axios';

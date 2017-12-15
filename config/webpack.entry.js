@@ -2,7 +2,7 @@ const glob = require('glob');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var sourceMap = {
-    entries : function () {
+    entries: function () {
         var entryJSs = glob.sync('./src/entry/*.js');
         var map = {};
         for (var i = 0; i < entryJSs.length; i++) {
@@ -12,7 +12,7 @@ var sourceMap = {
         }
         return map;
     },
-    plugin_html : function () {
+    plugin_html: function () {
         var entryHtml = glob.sync('./src/entry/*.html');
         var plus = [];
         var entriesFiles = this.entries();
@@ -21,7 +21,7 @@ var sourceMap = {
             var fileName = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
             var conf = {
                 template: filePath, //为什么'html!path'=='path+.html'
-                filename: 'html/'+fileName + '.html',
+                filename: 'html/' + fileName + '.html',
                 // minify: {
                 //     removeComments: true,
                 //     collapseWhitespace: true,

@@ -12,22 +12,22 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 
 config = merge(config, {
-        output:{
-            path: path.resolve(ROOT_PATH, 'bin'),
-            filename: 'entry/[name].[hash].js',
-            chunkFilename: "modules/[id].[hash].js",
-            publicPath: '/'
-        },
-        plugins: sourceMap.plugin_html().concat([
-            new CleanWebpackPlugin(['bin'], ROOT_PATH),
-            new UglifyJSPlugin(),
-            new webpack.optimize.CommonsChunkPlugin({
-                name: 'vendors',
-                filename: "entry/[name].[hash].js",
-                minChunks: 2
-            })
-        ])
-    }
+    output: {
+        path: path.resolve(ROOT_PATH, 'bin'),
+        filename: 'entry/[name].[hash].js',
+        chunkFilename: "modules/[id].[hash].js",
+        publicPath: '/'
+    },
+    plugins: sourceMap.plugin_html().concat([
+        new CleanWebpackPlugin(['bin'], ROOT_PATH),
+        new UglifyJSPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendors',
+            filename: "entry/[name].[hash].js",
+            minChunks: 2
+        })
+    ])
+}
 );
 
 
