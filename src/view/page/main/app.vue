@@ -17,4 +17,18 @@
 body{
     font-size: 20px;
 }
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.clear{
+    clear: both;
+}
+a:hover{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
 </style>
