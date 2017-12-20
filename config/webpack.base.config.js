@@ -14,7 +14,7 @@ const config = {
     }),
     output: {
         path: path.resolve(ROOT_PATH, 'bin_dev'),
-        filename: 'entry/[name].js',
+        filename: 'entry/[name]/[name].js',
         chunkFilename: "modules/[id].js",
         publicPath: '/'
     },

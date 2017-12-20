@@ -6,10 +6,9 @@ config = merge(config, {
     plugins: sourceMap.plugin_html(),
     devServer: {
         contentBase: false,
-        host: "192.168.2.36",
+        // host: "192.168.2.36",
         clientLogLevel: false,
-        port: 999,
-        openPage: '/different/page'
+        port: 8082,
     },
 });
 
