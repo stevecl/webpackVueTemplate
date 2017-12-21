@@ -22,11 +22,11 @@ var sourceMap = {
             var conf = {
                 template: filePath, //为什么'html!path'=='path+.html'
                 filename: 'html/' + fileName + '.html',
-                // minify: {
-                //     removeComments: true,
-                //     collapseWhitespace: true,
-                //     removeAttributeQuotes: true
-                // }
+                minify: {
+                    removeComments: true,
+                    collapseWhitespace: true,
+                    removeAttributeQuotes: true
+                },
             }
             //添加同名entry文件需引用模块
             if (fileName in entriesFiles) {

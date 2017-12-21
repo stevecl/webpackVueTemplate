@@ -5,44 +5,44 @@
 </template>
 <script>
 /**
-   * 气泡提示
-   * 调用：
-   *    1. import bubble_hint from './bubble_hint.vue';       //通用组件
-   *    2. 注册组件
-   *       let vm = new Vue({
-   *         el: 'body',
-   *         component:{
-   *         	'bubble_hint': bubble_hint
-   *         },
-   *         ready: function() {
-   *           this.$broadcast('show_tips', '我是提示气泡');
-   *           ...
-   *       },
-   *        ...
-   *       )}
-   *    3. 页面初始化组件
-   *        <bubble_hint></bubble_hint>
-	 *
-	 */
+    * 气泡提示
+    * 调用：
+    *    1. import bubble_hint from './bubble_hint.vue';       //通用组件
+    *    2. 注册组件
+    *       let vm = new Vue({
+    *         el: 'body',
+    *         component:{
+    *         	'bubble_hint': bubble_hint
+    *         },
+    *         ready: function() {
+    *           this.$broadcast('show_tips', '我是提示气泡');
+    *           ...
+    *       },
+    *        ...
+    *       )}
+    *    3. 页面初始化组件
+    *        <bubble_hint></bubble_hint>
+	*
+	*/
 module.exports = {
-    data: function() {
+    data() {
         return {
-        show: false,
-        hint_msg: ""
+            show: false,
+            hint_msg: ''
         };
     },
-    created: function() {
+    created() {
         //   this.time_cart();
         // console.log('createsadasd')
         bus.$on('bubble',(msg)=>{this.time_hint(msg);})
     },
     methods: {
-        time_hint: function(msg) {
+        time_hint(msg) {
             var self = this;
             self.hint_msg = msg;
             self.show = true;
-            setTimeout(function() {
-                self.hint_msg = "";
+            setTimeout(()=>{
+                self.hint_msg = '';
                 self.show = false;
             }, 2000);
         }

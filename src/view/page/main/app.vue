@@ -6,12 +6,12 @@
     </div>
 </template>
 <script>
-  export default {
-    mounted (){
-    },
-    methods:{
+    export default {
+        mounted() {
+        },
+        methods:{
+        }
     }
-  }
 </script>
 <style>
 body{

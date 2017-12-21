@@ -20,7 +20,12 @@ config = merge(config, {
     },
     plugins: sourceMap.plugin_html().concat([
         new CleanWebpackPlugin(['bin'], ROOT_PATH),
-        new UglifyJSPlugin(),
+        new UglifyJSPlugin({
+            compress: {
+                warnings: false,
+                drop_console: true
+            },
+        }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendors',
             filename: "entry/[name].[hash].js",

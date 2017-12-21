@@ -23,49 +23,40 @@
 </template>
 
 <script>
-function setRem(){
-    var width = document.documentElement.clientWidth;
-    var height = document.documentElement.clientHeight;
-    var devWidth = height > width ? width : height;
-    if (devWidth > 750) devWidth = 750; //取短后是否会大于750
-    document.documentElement.style.fontSize = devWidth / (750 / 100) + 'px';
+/**
+ * loading
+ * 调用：
+ *    1. var loading = require('../components/loading.vue');       //通用组件
+ *    2. 注册组件
+ *       let vm = new Vue({
+ *         el: 'body',
+ *         component:{
+ *         	'loading': loading
+ *         },
+ *         data: {
+ *           isLoadShow: true,
+ *           ...
+ *       },
+ *         ...
+ *       )}
+ *    3. 页面初始化组件
+ *       <loading v-bind:is-load-show.sync="isLoadShow"></loading>
+ *
+ */
+module.exports = {
+    // props:['isLoadShow'],
+    data() {
+        return {
+            isLoadShow: false
+        }
+    },
+    ready() {
+        //console.log(this.isshow);
+    },
+    created() {
+        bus.$on('loading',(show)=>{this.isLoadShow = show;})
+    },
 }
-
-setRem();
-	/**
-	 * loading
-	 * 调用：
-	 *    1. var loading = require('../components/loading.vue');       //通用组件
-	 *    2. 注册组件
-	 *       let vm = new Vue({
-   *         el: 'body',
-   *         component:{
-   *         	'loading': loading
-   *         },
-   *         data: {
-   *           isLoadShow: true,
-   *           ...
-   *       },
-   *         ...
-   *       )}
-   *    3. 页面初始化组件
-   *       <loading v-bind:is-load-show.sync="isLoadShow"></loading>
-	 *
-	 */
-	export default {
-        // props:['isLoadShow'],
-        data (){
-            return {
-                isLoadShow: false
-            }
-        },
-		ready (){
-			 //console.log(this.isshow);
-        },
-        created (){
-            bus.$on('loading',(show)=>{this.isLoadShow = show;})
-        },
-	}
 
 </script>
 <style scoped>

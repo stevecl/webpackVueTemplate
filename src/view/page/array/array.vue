@@ -21,7 +21,7 @@
 <script>
 export default {
     created() {
-        console.log("created");
+        console.log('created');
     },
     data() {
         return {
@@ -44,7 +44,7 @@ export default {
         },
         reverse(arr) {
             console.log(this.$refs.test);
-            this.$refs.test.style.color = "red";
+            this.$refs.test.style.color = 'red';
             // this.items = _.shuffle(this.items)
             arr.reverse();
         }

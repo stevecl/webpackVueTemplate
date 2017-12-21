@@ -10,7 +10,7 @@ export default {
     mounted() {},
     methods: {
         all() {
-            this.$router.push({ path: "/list" });
+            this.$router.push({ path: '/list' });
         },
     }
 };
