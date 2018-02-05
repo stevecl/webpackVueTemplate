@@ -1,7 +1,7 @@
 <template lang="">
-    <div class="bubble" v-show="show">
-        <p>{{hint_msg}}</p>
-    </div>
+  <div class="bubble" v-show="show">
+    <p>{{hint_msg}}</p>
+  </div>
 </template>
 <script>
 /**
@@ -25,28 +25,28 @@
 	*
 	*/
 module.exports = {
-    data() {
-        return {
-            show: false,
-            hint_msg: ''
-        };
-    },
-    created() {
-        //   this.time_cart();
-        // console.log('createsadasd')
-        bus.$on('bubble',(msg)=>{this.time_hint(msg);})
-    },
-    methods: {
-        time_hint(msg) {
-            var self = this;
-            self.hint_msg = msg;
-            self.show = true;
-            setTimeout(()=>{
-                self.hint_msg = '';
-                self.show = false;
-            }, 2000);
-        }
+  data() {
+    return {
+      show: false,
+      hint_msg: ''
+    };
+  },
+  created() {
+    //   this.time_cart();
+    // console.log('createsadasd')
+    bus.$on('bubble',(msg)=>{this.time_hint(msg);})
+  },
+  methods: {
+    time_hint(msg) {
+      var self = this;
+      self.hint_msg = msg;
+      self.show = true;
+      setTimeout(()=>{
+          self.hint_msg = '';
+          self.show = false;
+      }, 2000);
     }
+  }
 };
 </script>
 <style>

@@ -1,34 +1,32 @@
 <template lang="">
-    <div>
-        <router-view></router-view>
-        <bubbleHint></bubbleHint>
-        <loading></loading>
-    </div>
+  <div>
+    <router-view></router-view>
+    <bubbleHint></bubbleHint>
+    <loading></loading>
+  </div>
 </template>
 <script>
-    export default {
-        mounted() {
-        },
-        methods:{
-        }
-    }
+export default {
+  mounted() {},
+  methods: {}
+};
 </script>
 <style>
-body{
-    font-size: 20px;
+body {
+  font-size: 20px;
 }
-.fl{
-    float: left;
+.fl {
+  float: left;
 }
-.fr{
-    float: right;
+.fr {
+  float: right;
 }
-.clear{
-    clear: both;
+.clear {
+  clear: both;
 }
-a:hover{
-    color: blue;
-    text-decoration: underline;
-    cursor: pointer;
+a:hover {
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
 }
 </style>

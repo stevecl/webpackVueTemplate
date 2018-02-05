@@ -19,21 +19,22 @@ Vue.prototype.$http = axios;
 Vue.use(VueRouter);
 // 创建路由实例
 const router = new VueRouter({
-    routes: routerConfig
+  routes: routerConfig
 });
 window.bus = new Vue();
 
 let vm = new Vue({
-    router,
-    render: h => h(App)
+  router,
+  render: h => h(App)
 });
 vm.$mount('#app');
 
 setRem();
-function setRem(){
-    var width = document.documentElement.clientWidth;
-    var height = document.documentElement.clientHeight;
-    var devWidth = height > width ? width : height;
-    if (devWidth > 750) devWidth = 750; //取短后是否会大于750
-    document.documentElement.style.fontSize = devWidth / (750 / 100) + 'px';
+
+function setRem() {
+  var width = document.documentElement.clientWidth;
+  var height = document.documentElement.clientHeight;
+  var devWidth = height > width ? width : height;
+  if (devWidth > 750) devWidth = 750; //取短后是否会大于750
+  document.documentElement.style.fontSize = devWidth / (750 / 100) + 'px';
 }
