@@ -12,12 +12,12 @@ config = merge(config, {
   },
   devtool: 'source-map',
   plugins: [
-    // 设置全局变量
-    // new webpack.DefinePlugin({
-    //   PRODUCTION: JSON.stringify('true'),
-    // })
     // css抽取
     new ExtractTextPlugin("css/[name].css"),
+    // 设置全局变量
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify('false'),
+    })
   ]
 });
 

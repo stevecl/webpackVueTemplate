@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "SET NODE_ENV=production && webpack --progress --config config/webpack.watch.js",
-    "dev": "webpack-dev-server --config config/webpack.dev.js",
-    "live": "webpack --config config/webpack.prod.js"
+    "watch": "SET NODE_ENV=dev && webpack --progress --config config/webpack.watch.js",
+    "dev": "SET NODE_ENV=dev && webpack-dev-server --config config/webpack.dev.js",
+    "live": "SET NODE_ENV=production && webpack --config config/webpack.prod.js"
   },
   "repository": {
     "type": "git",

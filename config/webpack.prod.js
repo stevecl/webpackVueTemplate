@@ -3,6 +3,7 @@ var config = require('./webpack.base.config.js');
 let ROOT_PATH = process.cwd();
 
 const path = require('path');
+const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
@@ -15,14 +16,23 @@ config = merge(config, {
   },
   devtool: false,
   plugins:[
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': '"production"',
-    // }),
-    new CleanWebpackPlugin(['dist'], ROOT_PATH),
     // css抽取
     new ExtractTextPlugin("css/[name].[hash:8].css"),
+    // 设置全局变量
+    new webpack.DefinePlugin({
+      'PRODUCTION': JSON.stringify('true'),
+    }),
+    // 清除dist目录
+    new CleanWebpackPlugin(['dist'], ROOT_PATH),
     // 压缩
-    new UglifyJSPlugin()
+    new UglifyJSPlugin({
+      sourceMap: true,
+      compress:{
+          warnings: false,
+          drop_debugger: true,
+          drop_console: true
+      }
+    })
   ]
 });
 

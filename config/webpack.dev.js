@@ -1,13 +1,14 @@
 var merge = require('webpack-merge');
 var config = require('./webpack.base.config.js');
 
-const webpack = require('webpack')
+// const path = require('path');
+const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 config = merge(config, {
   devtool: 'source-map',
   devServer: {
-    // contentBase: path.join(__dirname, "dist"),
+    // contentBase: path.join(__dirname, "bin_dev"),
     host: '192.168.2.36',
     contentBase: false,
     clientLogLevel: false,
@@ -18,10 +19,11 @@ config = merge(config, {
   plugins: [
     // css抽取
     new ExtractTextPlugin("css/[name].css"),
+    // 设置全局变量
     new webpack.DefinePlugin({
-      PRODUCTION: JSON.stringify('true'),
+      PRODUCTION: JSON.stringify('false'),
     })
   ]
 });
-console.log('test')
+
 module.exports = config;

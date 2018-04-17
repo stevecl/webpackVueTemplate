@@ -10,7 +10,7 @@ const config = {
     app: path.resolve(ROOT_PATH,'src/index.js')
   },
   output: {
-    path: path.resolve(ROOT_PATH,'bin_dev'),
+    path: path.resolve(ROOT_PATH,'dist'),
     filename: 'js/[name].js',
     publicPath: ''
   },
@@ -74,8 +74,8 @@ const config = {
 	},
   plugins: [
     new HtmlWebpackPlugin({
-      filename: path.resolve(ROOT_PATH,'dist/index.html'),
-      template: path.resolve(ROOT_PATH,'src/index.html'),
+      filename: process.env.NODE_ENV == 'dev' ? path.resolve(ROOT_PATH, 'bin_dev/index.html') : path.resolve(ROOT_PATH, 'dist/index.html'),
+      template: path.resolve(ROOT_PATH, 'src/index.html'),
       inject: 'body',
       minify: {
         removeComments: true,

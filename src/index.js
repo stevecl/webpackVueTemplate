@@ -12,7 +12,7 @@ var vm = new Vue({
     }
   },
   mounted(){
-    console.log('test')
+    // console.log('test')
   },
   render: h => h(App)
 })
