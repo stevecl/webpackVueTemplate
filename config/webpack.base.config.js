@@ -1,34 +1,29 @@
 const path = require('path');
-const glob = require('glob');
-const webpack = require('webpack');
-
-// var ROOT_PATH = path.resolve(__dirname);
 var ROOT_PATH = process.cwd();
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const sourceMap = require('./webpack.entry');
+const webpack = require('webpack')
 
 const config = {
-  entry: Object.assign(sourceMap.entries(), {
-    vendors: ['vue']
-  }),
-  output: {
-    path: path.resolve(ROOT_PATH, 'bin_dev'),
-    filename: 'entry/[name].js',
-    chunkFilename: "modules/[id].js",
-    publicPath: '/'
+  entry: {
+    vendor: 'vue',
+    app: path.resolve(ROOT_PATH,'src/index.js')
   },
-  devtool: false,
+  output: {
+    path: path.resolve(ROOT_PATH,'bin_dev'),
+    filename: 'js/[name].js',
+    publicPath: ''
+  },
   module: {
-    rules: [{
-        test: /\.vue$/,
-        loader: 'vue-loader',
-      },
+    rules: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-
+      },
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
       },
       {
         test: /\.css$/,
@@ -38,38 +33,63 @@ const config = {
         })
       },
       {
-        test: /\.html$/,
-        loader: 'html-loader'
-      },
-      {
         test: /\.sass|.scss$/,
         loader: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: 'css-loader!sass-loader'
         }),
-        exclude: /node_modules/
       },
       {
-        test: /\.(png|jpg|gif)$/,
-        loader: 'url-loader?limit=1&name=images/[name][hash:8].[ext]'
-      }
+				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+				loader: 'url-loader',
+				options: {
+					limit: 10240,
+					name: 'img/[name].[hash:7].[ext]'
+				}
+			},
+			{
+				test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+				loader: 'url-loader',
+				options: {
+					limit: 10240,
+					name: 'media/[name].[hash:7].[ext]'
+				}
+			},
+			{
+				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+				loader: 'url-loader',
+				options: {
+					limit: 10240,
+					name: 'fonts/[name].[hash:7].[ext]'
+				}
+			}
     ]
   },
   resolve: {
-    extensions: ['.css', '.sass', '.js', '.vue', '.scss'],
-    alias: {
-      "pages": path.resolve(ROOT_PATH, 'src/view/page'),
-      "asssets": path.resolve(ROOT_PATH, 'src/assets')
-    }
-  },
+    extensions: ['.js', '.vue', '.json', '.scss', '.css', '.sass'],
+		alias: {
+      // vue不用render渲染 可放出
+			// 'vue$': 'vue/dist/vue.js'
+		}
+	},
   plugins: [
-    new ExtractTextPlugin("css/[name].css"),
+    new HtmlWebpackPlugin({
+      filename: path.resolve(ROOT_PATH,'dist/index.html'),
+      template: path.resolve(ROOT_PATH,'src/index.html'),
+      inject: 'body',
+      minify: {
+        removeComments: true,
+        // collapseWhitespace: true,
+        // removeAttributeQuotes: true
+      },
+      chunks:['app', 'vendor']   // 这个模板对应上面那个节点
+    }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendors',
-      filename: "entry/[name].js",
+      name: 'vendor',
+      filename: "js/[name].js",
       minChunks: 2
     })
   ]
-};
+}
 
 module.exports = config;

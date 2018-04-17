@@ -1,5 +1,5 @@
 ## 项目描述
-> vue 多页应用项目模板
+> vue SPA项目模板
 
 ## 运行平台
 > 浏览器
@@ -7,7 +7,7 @@
 ---
 
 ### 目录结构
-  - bin                         生产运行目录
+  - dist                        生产运行目录
   - bin_dev                     开发运行目录(增量编译目录)
   - config                      项目配置(webpack)
   - src                         源码
@@ -15,11 +15,13 @@
       - images                  图片资源
       - lib                     外部库
       - style                   style sheet
-    - entry                     入口文件
-    - service                   不需编译直接拷贝到运行目录的文件
+    - serves
+      - router                  vue-router
+      - utils                   工具类js
     - views                     页面模块
       - components              vue公共组件
-      - pages                   vue页面组件
+    - index.html                入口文件
+    - index.js
 
 ---
 ### 快速开始

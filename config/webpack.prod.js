@@ -1,38 +1,29 @@
-const path = require('path');
-const webpack = require('webpack');
-let merge = require('webpack-merge');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
-
+var merge = require('webpack-merge');
+var config = require('./webpack.base.config.js');
 let ROOT_PATH = process.cwd();
 
-let config = require('./webpack.base.config');
-const sourceMap = require('./webpack.entry');
-
+const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 config = merge(config, {
   output: {
-    path: path.resolve(ROOT_PATH, 'bin'),
-    filename: 'entry/[name].[hash].js',
-    chunkFilename: "modules/[id].[hash].js",
-    publicPath: '/'
+    path: path.resolve(ROOT_PATH,'dist'),
+    filename: 'js/[name].[hash:8].js',
+    publicPath: ''
   },
-  plugins: sourceMap.plugin_html().concat([
-    new CleanWebpackPlugin(['bin'], ROOT_PATH),
-    new UglifyJSPlugin({
-      compress: {
-        warnings: false,
-        drop_console: true
-      },
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendors',
-      filename: "entry/[name].[hash].js",
-      minChunks: 2
-    })
-  ])
+  devtool: false,
+  plugins:[
+    // new webpack.DefinePlugin({
+    //   'process.env.NODE_ENV': '"production"',
+    // }),
+    new CleanWebpackPlugin(['dist'], ROOT_PATH),
+    // css抽取
+    new ExtractTextPlugin("css/[name].[hash:8].css"),
+    // 压缩
+    new UglifyJSPlugin()
+  ]
 });
-
 
 module.exports = config;

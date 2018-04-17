@@ -1,16 +1,27 @@
 var merge = require('webpack-merge');
-// const webpack = require('webpack');
-let config = require('./webpack.base.config');
-const sourceMap = require('./webpack.entry');
+var config = require('./webpack.base.config.js');
+
+const webpack = require('webpack')
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
 config = merge(config, {
-  plugins: sourceMap.plugin_html(),
+  devtool: 'source-map',
   devServer: {
+    // contentBase: path.join(__dirname, "dist"),
+    host: '192.168.2.36',
     contentBase: false,
-    // host: "192.168.2.36",
     clientLogLevel: false,
-    port: 8082,
+    compress: true,
+    port: 9000,
+    open: true
   },
+  plugins: [
+    // css抽取
+    new ExtractTextPlugin("css/[name].css"),
+    new webpack.DefinePlugin({
+      PRODUCTION: JSON.stringify('true'),
+    })
+  ]
 });
-
-
+console.log('test')
 module.exports = config;
