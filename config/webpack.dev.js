@@ -9,7 +9,7 @@ config = merge(config, {
   devtool: 'source-map',
   devServer: {
     // contentBase: path.join(__dirname, "bin_dev"),
-    host: '192.168.2.36',
+    host: '192.168.1.159',
     contentBase: false,
     clientLogLevel: false,
     compress: true,

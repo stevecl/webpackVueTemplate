@@ -8,7 +8,7 @@ let ROOT_PATH = process.cwd();
 
 config = merge(config, {
   output: {
-    path: path.resolve(ROOT_PATH,'bin_dev'),
+    path: path.resolve(ROOT_PATH, 'bin_dev'),
   },
   devtool: 'source-map',
   plugins: [

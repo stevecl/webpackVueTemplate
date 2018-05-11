@@ -10,12 +10,12 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 config = merge(config, {
   output: {
-    path: path.resolve(ROOT_PATH,'dist'),
+    path: path.resolve(ROOT_PATH, 'dist'),
     filename: 'js/[name].[hash:8].js',
     publicPath: ''
   },
   devtool: false,
-  plugins:[
+  plugins: [
     // css抽取
     new ExtractTextPlugin("css/[name].[hash:8].css"),
     // 设置全局变量
@@ -27,10 +27,10 @@ config = merge(config, {
     // 压缩
     new UglifyJSPlugin({
       sourceMap: true,
-      compress:{
-          warnings: false,
-          drop_debugger: true,
-          drop_console: true
+      compress: {
+        warnings: false,
+        drop_debugger: true,
+        drop_console: true
       }
     })
   ]

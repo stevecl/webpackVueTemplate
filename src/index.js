@@ -11,11 +11,11 @@ var vm = new Vue({
       imgUrl: '啊实打实的'
     }
   },
-  mounted(){
+  mounted() {
     // console.log('test')
   },
   render: h => h(App)
 })
 
-console.log('PRODUCTION:',PRODUCTION)
+console.log('PRODUCTION:', PRODUCTION)
 vm.$mount('#app');

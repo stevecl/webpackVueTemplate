@@ -1,4 +1,4 @@
-var tt = function(){
+var tt = function () {
   console.log('tt function')
 }
 console.log('chunk1')

@@ -7,10 +7,10 @@ const webpack = require('webpack')
 const config = {
   entry: {
     vendor: 'vue',
-    app: path.resolve(ROOT_PATH,'src/index.js')
+    app: path.resolve(ROOT_PATH, 'src/index.js')
   },
   output: {
-    path: path.resolve(ROOT_PATH,'dist'),
+    path: path.resolve(ROOT_PATH, 'dist'),
     filename: 'js/[name].js',
     publicPath: ''
   },
@@ -40,38 +40,38 @@ const config = {
         }),
       },
       {
-				test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-				loader: 'url-loader',
-				options: {
-					limit: 10240,
-					name: 'img/[name].[hash:7].[ext]'
-				}
-			},
-			{
-				test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
-				loader: 'url-loader',
-				options: {
-					limit: 10240,
-					name: 'media/[name].[hash:7].[ext]'
-				}
-			},
-			{
-				test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-				loader: 'url-loader',
-				options: {
-					limit: 10240,
-					name: 'fonts/[name].[hash:7].[ext]'
-				}
-			}
+        test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10240,
+          name: 'img/[name].[hash:7].[ext]'
+        }
+      },
+      {
+        test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10240,
+          name: 'media/[name].[hash:7].[ext]'
+        }
+      },
+      {
+        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10240,
+          name: 'fonts/[name].[hash:7].[ext]'
+        }
+      }
     ]
   },
   resolve: {
     extensions: ['.js', '.vue', '.json', '.scss', '.css', '.sass'],
-		alias: {
+    alias: {
       // vue不用render渲染 可放出
-			// 'vue$': 'vue/dist/vue.js'
-		}
-	},
+      // 'vue$': 'vue/dist/vue.js'
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
       filename: process.env.NODE_ENV == 'dev' ? path.resolve(ROOT_PATH, 'bin_dev/index.html') : path.resolve(ROOT_PATH, 'dist/index.html'),
@@ -82,7 +82,7 @@ const config = {
         // collapseWhitespace: true,
         // removeAttributeQuotes: true
       },
-      chunks:['app', 'vendor']   // 这个模板对应上面那个节点
+      chunks: ['app', 'vendor']   // 这个模板对应上面那个节点
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
