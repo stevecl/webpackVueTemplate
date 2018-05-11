@@ -1,5 +1,5 @@
 const path = require('path');
-const webpack = require('webpack')
+const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 var merge = require('webpack-merge');

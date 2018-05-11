@@ -2,7 +2,7 @@ const path = require('path');
 var ROOT_PATH = process.cwd();
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const webpack = require('webpack')
+const webpack = require('webpack');
 
 const config = {
   entry: {
@@ -69,12 +69,13 @@ const config = {
     extensions: ['.js', '.vue', '.json', '.scss', '.css', '.sass'],
     alias: {
       // vue不用render渲染 可放出
-      // 'vue$': 'vue/dist/vue.js'
+      // 'vue$': 'vue/dist/vue.js',
+      '#': path.resolve(ROOT_PATH, 'src/views')
     }
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV == 'dev' ? path.resolve(ROOT_PATH, 'bin_dev/index.html') : path.resolve(ROOT_PATH, 'dist/index.html'),
+      filename: process.env.NODE_ENV === 'dev' ? path.resolve(ROOT_PATH, 'bin_dev/index.html') : path.resolve(ROOT_PATH, 'dist/index.html'),
       template: path.resolve(ROOT_PATH, 'src/index.html'),
       inject: 'body',
       minify: {
@@ -90,6 +91,6 @@ const config = {
       minChunks: 2
     })
   ]
-}
+};
 
 module.exports = config;

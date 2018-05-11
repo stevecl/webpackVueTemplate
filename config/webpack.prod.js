@@ -3,7 +3,7 @@ var config = require('./webpack.base.config.js');
 let ROOT_PATH = process.cwd();
 
 const path = require('path');
-const webpack = require('webpack')
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
@@ -33,7 +33,7 @@ config = merge(config, {
         drop_console: true
       }
     })
-  ]
+  ],
 });
 
 module.exports = config;

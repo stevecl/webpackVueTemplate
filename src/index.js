@@ -3,19 +3,18 @@ import './assets/style/common.css'
 
 import Vue from 'vue';
 import App from './views/app.vue'
+import router from './serves/router'
+import util from './serves/utils/util'
+import eventBus from './serves/utils/bus'
 
-var vm = new Vue({
+window.util = util;
+window.Bus = eventBus;
+
+let vm = new Vue({
   // el: '#app',
-  data() {
-    return {
-      imgUrl: '啊实打实的'
-    }
-  },
-  mounted() {
-    // console.log('test')
-  },
+  router,
   render: h => h(App)
-})
+});
 
-console.log('PRODUCTION:', PRODUCTION)
+// console.log('PRODUCTION:', PRODUCTION);
 vm.$mount('#app');

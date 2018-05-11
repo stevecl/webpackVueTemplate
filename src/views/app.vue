@@ -1,7 +1,8 @@
 <template>
   <div id="root">
-    <p>{{msg}}</p>
-    <img src="../assets/images/test/img1.jpg" alt="">
+    <!--<p>{{msg}}</p>-->
+    <!--<img src="../assets/images/test/img1.jpg" alt="">-->
+    <router-view></router-view>
     <!-- <video src="./../assets/xxx.mp4"></video> -->
   </div>
 </template>
