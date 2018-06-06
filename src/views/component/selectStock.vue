@@ -1,42 +1,31 @@
 <template>
   <!--主要容器开始-->
-  <div class="select-stock" :style="{'width': width +'px','height': height + 'px'}">
-    <div class="title">请选择购买时间</div>
-    <div class="stock" :style="{'height': height - 20 +'px'}">
+  <div id="select-stock-container" :style="{'top':po_top+'px', 'left':po_left+'px'}" v-show="isShow">
+    <div class="stock">
       <div class="change-month">
         <img src="../../assets/images/stock-arrow.png"
              @click="prevMonth">
         <img src="../../assets/images/stock-arrow.png"
              @click="nextMonth">
-        <div :style="{'height':'30px','line-height':'30px'}">
-          {{cur_year}}年 {{cur_month+1}}月
-        </div>
+        <div>{{cur_year}}年 {{cur_month+1}}月</div>
       </div>
-      <div class="table-title">
-        <table border="0" cellspacing="0"
-               :style="{'height':((height - 20 < 300 ? 300 : height - 20) - 30) +'px'}">
-          <thead>
-          <tr>
-            <td>日</td>
-            <td>一</td>
-            <td>二</td>
-            <td>三</td>
-            <td>四</td>
-            <td>五</td>
-            <td>六</td>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="rows in dateList">
-            <td
-              :class="{'not-select': col.attr === 'false', 'selected': checkDateSelect(col.date)}"
+      <div class="select-date-box">
+        <ul>
+          <li class="orange">日</li>
+          <li>一</li>
+          <li>二</li>
+          <li>三</li>
+          <li>四</li>
+          <li>五</li>
+          <li class="orange">六</li>
+        </ul>
+        <ul v-for="rows in dateList">
+          <li :class="{'not-select': col.attr === 'false'}"
               v-for="(col, idx) in rows"
               @click="selectedDate(col)">
-              <span class="date">{{col.date | parseDate}}</span>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+            {{col.date | parseDate}}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -46,45 +35,65 @@
 <script>
   let vm; //留住this
   export default {
-    name: 'stock', //定义模块名称
+    name: 'selectDates', //定义模块名称
     props: {
 
     },
     data() {
       return {
-        width: 1120,
-        height: 315,
         dateList: [],
-        stockList: [],
         checkList: [],
 
+        po_top: 300,
+        po_left: 400,
         cur_month: 3,  // 0-11
         cur_year: 2018,
         cur_date: 28,
+        isOneMonth: true, // 是否只显示当前月份
 
+        minDate: '1970-1-1', // 日期选择范围 default
+        maxDate: '3000-12-28',
+
+        isShow: false,
+        backResult: null
       } //定义模块变量
     },
     methods: {
+      // 设置参数
+      init(option) {
+        let date = option.date ? new Date(option.date) : new Date();
+        vm.po_top = option.top || vm.po_top;
+        vm.po_left = option.left || vm.po_left;
+        vm.cur_year = date.getFullYear();
+        vm.cur_month = date.getMonth();
+        vm.cur_date = date.getDate();
+        vm.minDate = option.minDate || vm.minDate;
+        vm.maxDate = option.maxDate || vm.maxDate;
+        !option.isOneMonth && (vm.isOneMonth = false);
+        vm.backResult = option.callback;
+        vm.render();
+      },
       // 根据日期生成所需数据列表
       render() {
         vm.dateList = [];
-        let year = vm.cur_year, month = vm.cur_month;
-        let fullDay = new Date(year, month + 1, 0).getDate(), //当月总天数
-          startWeek = new Date(year, month, 1).getDay(), //当月第一天是周几
-          total = (fullDay + startWeek) % 7 === 0 ? (fullDay + startWeek) : fullDay + startWeek + (7 - (fullDay + startWeek) % 7),//元素总个数
-          // lastMonthDay = new Date(year, month, 0).getDate(), //上月最后一天
-          eleTemp = [];
+        let year = vm.cur_year,
+            month = vm.cur_month,
+            fullDay = new Date(year, month + 1, 0).getDate(), //当月总天数
+            startWeek = new Date(year, month, 1).getDay(), //当月第一天是周几
+            total = (fullDay + startWeek) % 7 === 0 ? (fullDay + startWeek) : fullDay + startWeek + (7 - (fullDay + startWeek) % 7),//元素总个数
+            lastMonthDay = new Date(year, month, 0).getDate(), //上月最后一天
+            eleTemp = [];
         for (let i = 0; i < total; i++) {
           if (i < startWeek) {
-            eleTemp.push(' ')
+            vm.isOneMonth ? eleTemp.push(' ') : eleTemp.push(new Date(year, month - 1, lastMonthDay - startWeek + 1 + i).format('yyyy-MM-dd'))
           } else if (i < (startWeek + fullDay)) {
             let _day = i + 1 - startWeek;
             eleTemp.push(new Date(year, month, _day).format('yyyy-MM-dd'))
           } else {
-            eleTemp.push(' ')
+            vm.isOneMonth ? eleTemp.push(' ') : eleTemp.push(new Date(year, month + 1, i + 1 - (startWeek + fullDay)).format('yyyy-MM-dd'))
           }
         }
-        // console.log('当月总日：',eleTemp)
+        // console.log('当月总日：',eleTemp);
         for (let row = 0; row < 6; row++) {
           let _week = [];
           eleTemp.forEach((val, ins, arr) => {
@@ -101,67 +110,53 @@
       },
       // 判断该天是否在所选择范围内
       judgeDate(date) {
-        if (date === ' ') {
+        let _year = new Date(date).getFullYear(),
+            _month = new Date(date).getMonth(),
+            _day = new Date(date).getDate();
+        if (date === ' ' || _year !== vm.cur_year || _month !== vm.cur_month) {
           return false
         }
-        let _date = new Date();
+        let min_date = new Date(vm.minDate);
+        let max_date = new Date(vm.maxDate);
         // 默认时间比对 参考为当天 00:00:00
-        let nowTime = new Date(_date.getFullYear(), _date.getMonth(), _date.getDate(), 0, 0, 0).getTime();
-        let comTime = new Date(vm.cur_year, vm.cur_month, new Date(date).getDate()).getTime();
-        return comTime >= nowTime;
+        let nowTime = new Date(min_date.getFullYear(), min_date.getMonth(), min_date.getDate(), 0, 0, 0).getTime();
+        let endTime = new Date(max_date.getFullYear(), max_date.getMonth(), max_date.getDate(), 0, 0, 0).getTime();
+        let comTime = new Date(_year, _month, _day).getTime();
+        // console.log('date:',date, comTime >= nowTime);
+        return comTime >= nowTime && comTime <= endTime;
+      },
+      // 判断el元素是否是root元素的后代
+      judge(root, el) {
+        if (root.compareDocumentPosition)
+          return root === el || !!(root.compareDocumentPosition(el) & 16);
+        if (root.contains && el.nodeType === 1) {
+          return root.contains(el) && root !== el;
+        }
+        while ((el = el.parentNode))
+          if (el === root) return true;
+        return false;
       },
       nextMonth() {
         vm.cur_month += 1;
         vm.cur_month === 12 && vm.cur_year++ && (vm.cur_month = 0);
-        vm.getGoodsStock(vm.cur_year, vm.cur_month)
+        vm.render();
       },
       prevMonth() {
         vm.cur_month -= 1;
         vm.cur_month === -1 && vm.cur_year-- && (vm.cur_month = 11);
-        vm.getGoodsStock(vm.cur_year, vm.cur_month)
+        vm.render();
       },
       // 选择日期
       selectedDate(col) {
         if (col.attr === 'false') {
           return
         }
-        if (col.isSelected) {
-          // 取消选择
-          if (vm.checkDateSelect(col.date)) {
-            for (let i = 0; i < vm.checkList.length; i++) {
-              if (vm.checkList[i].date === col.date) {
-                col.isSelected = false;
-                vm.checkList.splice(i, 1);
-                return
-              }
-            }
-          }
-          return;
-        }
-        col.isSelected = true;
-        vm.checkList.push(col)
+        vm.backResult && vm.backResult(col.date);
+        vm.isShow = false;
       },
-      // 获取库存信息
-      getGoodsStock(year, month) {
-        // let now = new Date(year, month, 1);
-        // let da = new Date(year, month + 1, 0).getDate();
-        // let end = new Date(year, month, da);
-        vm.stockList = [];
-        vm.render();
-      },
-      setDate() {
-        vm.cur_year = new Date().getFullYear();
-        vm.cur_month = new Date().getMonth();
-        vm.cur_date = new Date().getDate();
-      },
-      checkDateSelect(date) {
-        let result = false;
-        vm.checkList.forEach((val) => {
-          if (date === val.date) {
-            result = true
-          }
-        });
-        return result;
+      show(option){
+        vm.init(option);
+        vm.isShow = true
       }
     },//方法定义区
     watch: {},//变量监听
@@ -177,8 +172,20 @@
     beforeMount() {//完成了 el 和 data 初始化
     },
     mounted() { //完成挂载
-      vm.setDate();
-      vm.getGoodsStock(vm.cur_year, vm.cur_month)
+      vm.$root.$on('selectDate', function (opt) {
+        vm.show(opt);
+        // if (opt.callback && typeof opt.callback === 'function') {
+        //   vm.goResult = opt.callback;
+        // }
+      });
+
+      let ele = document.getElementById('select-stock-container');
+      // 点击其它区域  隐藏日期选择框
+      document.addEventListener('click', function (e) {
+        if (!vm.judge(ele, e.target)) {
+          vm.isShow = false;
+        }
+      }, true);
     },
     beforeUpdate() {//更新前,
 
@@ -200,31 +207,22 @@
     },
     filters: {
       parseDate(value) {
-        if (new Date(value).format('yyyy-MM-dd') === new Date().format('yyyy-MM-dd')) {
-          return '今天'
-        }
         return value.split('-')[2]
       }
     }
   }
 </script>
 <style scoped lang="scss">
-  .select-stock {
-    .title {
-      min-width: 800px;
-      width: 100%;
-      height: 20px;
-      color: #333;
-      font-size: 16px;
-      line-height: 16px;
-    }
+  #select-stock-container {
+    position: fixed;
     .stock {
-      min-height: 300px;
-      width: 50%;
+      width: 240px;
+      font-size: 14px;
       float: left;
       .change-month {
         width: 100%;
-        height: 10%;
+        height: 30px;
+        line-height: 30px;
         background-color: #3e81d3;
         position: relative;
         img {
@@ -248,54 +246,28 @@
           font-size: 14px;
         }
       }
-      .table-title {
-        width: 100%;
-        table {
-          width: 100%;
-          height: 100%;
-          thead {
-            background-color: #e6e6e6;
-            tr {
-              td {
-                text-align: center;
-                color: #333;
-                font-size: 14px;
-                line-height: 25px;
-                width: 40px;
-              }
-              td:first-child, td:last-child {
-                color: #ffa224;
-              }
-            }
+      .select-date-box{
+        ul{
+          li{
+            float: left;
+            height: 35px;
+            line-height: 35px;
+            width: 14.28%;
+            box-sizing: border-box;
+            text-align: center;
+            cursor: pointer;
+            border-right: 1px solid #e6e6e6;
+            border-bottom: 1px solid #e6e6e6;
           }
-          tbody {
-            tr {
-              td {
-                position: relative;
-                text-align: center;
-                border-right: 1px #e6e6e6 solid;
-                border-bottom: 1px #e6e6e6 solid;
-                cursor: pointer;
-              }
-              td.not-select {
-                color: #B7B4B4;
-                cursor: default;
-              }
-              td.selected {
-                background-color: rgba(62, 129, 211, .9);
-                color: #fff;
-                span {
-                  color: #fff;
-                  border-color: #fff;
-                }
-              }
-              td.no-cursor {
-                cursor: default;
-              }
-              td:first-child {
-                border-left: 1px #e6e6e6 solid;
-              }
-            }
+          li.not-select{
+            cursor: default;
+            color: #B7B4B4;
+          }
+          li:first-of-type{
+            border-left: 1px solid #e6e6e6;
+          }
+          li.orange{
+            color: #FF7624;
           }
         }
       }

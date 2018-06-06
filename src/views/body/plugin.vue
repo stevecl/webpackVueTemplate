@@ -1,8 +1,8 @@
 <template>
   <div>
     <div @click="dateShow">选择日期</div>
-    <div @click="stockShow">选择库存</div>
-    <selectStock v-show="stockIsShow"></selectStock>
+    <div @click="stockShow">选择库存{{selectedDate}}</div>
+    <selectStock ref="test"></selectStock>
     <page name="分页" :flip="paging.flip" :total="paging.total" :page="paging.page" @selectPage="selectPage"></page>
     <selectDate></selectDate>
   </div>
@@ -24,7 +24,8 @@
           total: 10,
           page: 1
         },
-        stockIsShow: false
+        stockIsShow: false,
+        selectedDate: ''
       } //定义模块变量
     },
     methods: {
@@ -44,7 +45,13 @@
         vm.paging.page = page
       },
       stockShow() {
-        vm.stockIsShow = !vm.stockIsShow;
+        vm.$refs.test.show({
+          date: vm.selectedDate,
+          callback: function (msg) {
+            vm.selectedDate = msg
+          }
+        })
+        // vm.stockIsShow = !vm.stockIsShow;
       }
     },//方法定义区
     /**
