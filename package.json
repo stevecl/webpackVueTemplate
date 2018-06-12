@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stevecl/vueTem.git"
+    "url": "git@github.com:stevecl/webpackVueTemplate.git"
   },
   "keywords": [
     "vue"
@@ -19,9 +19,9 @@
   "author": "cl",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/stevecl/vueTem/issues"
+    "url": "https://github.com/stevecl/webpackVueTemplate/issues"
   },
-  "homepage": "https://github.com/stevecl/vueTem#readme",
+  "homepage": "https://github.com/stevecl/webpackVueTemplate#readme",
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"
