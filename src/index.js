@@ -1,4 +1,4 @@
-import './assets/style/reset.sass'
+import './assets/style/reset.less'
 import './assets/style/common.css'
 
 import Vue from 'vue';
@@ -11,9 +11,9 @@ window.util = util;
 window.Bus = eventBus;
 
 let vm = new Vue({
-  // el: '#app',
-  router,
-  render: h => h(App)
+	// el: '#app',
+	router,
+	render: h => h(App)
 });
 
 // console.log('PRODUCTION:', PRODUCTION);

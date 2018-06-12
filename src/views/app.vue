@@ -8,23 +8,27 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        msg: 'Hello Vue!',
-      }
-    },
-    computed: {},
-    mounted() {
-      console.log("App.vue mounted~");
-    },
-    methods: {}
-  }
+export default {
+  data() {
+    return {
+      msg: "Hello Vue!"
+    };
+  },
+  computed: {},
+  mounted() {
+    console.log("App.vue mounted~");
+  },
+  methods: {}
+};
 </script>
 
-<style scoped lang="sass">
-  #root
-    img
-      width: 200px
-      height: 200px
+<style scoped lang="less">
+#root {
+  // color: red;
+  display: flex;
+  img {
+    width: 200px;
+    height: 200px;
+  }
+}
 </style>

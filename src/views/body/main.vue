@@ -1,6 +1,8 @@
 <template>
   <div class="main-page">
-    <div>this is main page</div>
+    <div>this is main page
+      <img src="../../assets/images/test/img1.jpg" alt="">
+    </div>
     <ul>
       <li><router-link :to="'plugin'">plugin</router-link></li>
       <li><router-link :to="'home'">test1</router-link></li>
@@ -44,7 +46,7 @@
   }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
   .main-page {
     ul{
       display: inline-block;
@@ -52,6 +54,10 @@
       li{
         cursor: pointer;
       }
+    }
+    img{
+      width: 50px;
+      height: 50px;
     }
   }
 </style>
