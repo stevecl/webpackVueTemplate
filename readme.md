@@ -1,4 +1,4 @@
-# ssss
+# A webpack SPA demo
 
 > A Vue.js project
 

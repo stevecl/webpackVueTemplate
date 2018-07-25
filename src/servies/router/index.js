@@ -8,34 +8,36 @@ import pagination from '@/views/pagination'
 Vue.use(Router)
 
 export default new Router({
-  routes: [{
-      path: '/',
-      redirect: '/hello'
-    },
-    {
-      path: '/hello',
-      name: 'hello',
-      component: HelloWorld
-    },
-    {
-      path: '/demo',
-      name: 'Demo',
-      component: Demo,
-      children: [{
-          path: 'date',
-          name: 'Date',
-          component: selectDate
+    routes: [
+        {
+            path: '/',
+            redirect: '/hello'
         },
         {
-          path: 'pagination',
-          name: 'pagination',
-          component: pagination
-        }
-      ]
-    },
-    {
-      path: '*',
-      redirect: '/demo'
-    },
-  ]
+            path: '/hello',
+            name: 'hello',
+            component: HelloWorld
+        },
+        {
+            path: '/demo',
+            name: 'Demo',
+            component: Demo,
+            children: [
+                {
+                    path: 'date',
+                    name: 'Date',
+                    component: selectDate
+                },
+                {
+                    path: 'pagination',
+                    name: 'pagination',
+                    component: pagination
+                }
+            ]
+        },
+        {
+            path: '*',
+            redirect: '/demo'
+        },
+    ]
 })
